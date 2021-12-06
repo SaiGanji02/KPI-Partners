@@ -1,0 +1,46 @@
+2. List the name and designations of the staff who have joined before Jan 2005.
+
+
+
+create table staff(eid number,ename varchar(20),edesign varchar(20), Edoj date);
+
+
+select * from staff;
+
+insert into staff values(101,'saikumar','hod','11-feb-2004');
+insert into staff values(102,'vamshi','principal','11-08-2004');
+insert into staff values(103,'jp','professor','01-11-2004');
+insert into staff values(104,'asistant professor','hod','11-feb-2006');
+insert into staff values(105,'venkat','assosciate professor','01-jan-2006');
+insert into staff values(106,'chitti','phd','11-feb-2008');
+insert into staff values(107,'bunny','officer','11-feb-2009');
+insert into staff values(108,'pavan','vice principal','05-05-2004');
+insert into staff values(109,'chaitanya','chairman','12-12-2004');
+insert into staff values(110,'raju','lab assistant','15-06-2006');
+insert into staff values(111,'nuthan','technician','19-feb-1999');
+insert into staff values(112,'saikumar','receptionist','11-10-2004');
+insert into staff values(113,'bhargav','sportsman','19-feb-2009');
+
+
+select  ename,edesign  from staff where  edoj < ('05-Jan-2006');
+
+
+
+OUTPUT:
+
+
+ENAME                EDESIGN
+-------------------- --------------------
+saikumar             hod
+vamshi               principal
+jp                   professor
+venkat               assosciate professor
+pavan                vice principal
+chaitanya            chairman
+nuthan               technician
+saikumar             receptionist
+
+
+
+
+
