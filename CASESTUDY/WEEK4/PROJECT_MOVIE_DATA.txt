@@ -1,0 +1,427 @@
+1.Create Database project_movie_data and deploy table data according to ER diagram.
+
+2.Create 9 tables which are presented in ER model and load the data with their foreign key 
+
+----------------------------------------------------------
+alter table actor modify act_id int primary key; 
+create table actor(act_id int,act_fname char(20),act_lname char(20),act_gender char(10));
+
+select * from actor;
+
+insert into actor values(101,'james','stewart','M');
+insert into actor values(102,'deborah','kerr','F');
+insert into actor values(103,'peter','otoole','M');
+insert into actor values(104,'robert','de niro','M');
+insert into actor values(105,'f.murray','abraham','M');
+insert into actor values(106,'harrison','ford','M');
+insert into actor values(107,'nicole','kidman','F');
+insert into actor values(108,'stephFen','baldwin','M');
+insert into actor values(109,'jack','nicholson','M');
+insert into actor values(110,'mark','wahlberg','M');
+insert into actor values(111,'woody','allen','M');
+insert into actor values(112,'claire','danes','F');
+insert into actor values(113,'tim','robbins','M');
+insert into actor values(114,'kevin','spacey','M');
+insert into actor values(115,'kate','winselt','F');
+insert into actor values(116,'robbin','williams','M');
+insert into actor values(117,'jon','voight','M');
+insert into actor values(118,'ewan','mcgregor','M');
+insert into actor values(119,'christian','bale','M');
+insert into actor values(120,'maggie','gyllenhaal','F');
+insert into actor values(121,'dev','patel','M');
+insert into actor values(122,'sigourney','weaver','F');
+insert into actor values(123,'david','aston','M');
+insert into actor values(124,'ali','astin','M');
+
+
+
+create table director(dir_id int,dir_fname char(20),dir_lname char(20));
+alter table director modify dir_id int primary key;
+
+
+insert into director values(201,'affred','hitchcock');
+insert into director values(202,'jack','clayton');
+insert into director values(203,'david','lean');
+insert into director values(204,'michael','cimino');
+insert into director values(205,'milos','forman');
+insert into director values(206,'ridley','scott');
+insert into director values(207,'stanley','kubrick');
+insert into director values(208,'bryan','singer');
+insert into director values(209,'roman','polanski');
+insert into director values(210,'paul','thomas anderson');
+insert into director values(211,'woody','allen');
+insert into director values(212,'hayayo','miyazaki');
+insert into director values(213,'frank','darabont');
+insert into director values(214,'sam','mendes');
+insert into director values(215,'james','cameron');
+insert into director values(216,'gus','van sant');
+insert into director values(217,'john','boorman');
+insert into director values(218,'danny','boyle');
+insert into director values(219,'christper','nolan');
+insert into director values(220,'richard','kelly');
+insert into director values(221,'kevin','spacey');
+insert into director values(222,'andrei','tarkovsky');
+insert into director values(223,'peter','jackson');
+
+
+select * from director;
+
+create table genres(gen_id integer primary key,gen_title char(20));
+
+select * from genres;
+
+
+insert into genres values(1001,'action');
+insert into genres values(1002,'adventure');
+insert into genres values(1003,'animation');
+
+insert into genres values(1004,'biography');
+insert into genres values(1005,'comedy');
+
+insert into genres values(1006,'crime');
+
+insert into genres values(1007,'drama');
+insert into genres values(1008,'horror');
+
+insert into genres values(1009,'music');
+
+insert into genres values(1010,'mystery');
+
+insert into genres values(1011,'romance');
+
+insert into genres values(1012,'thriller');
+
+insert into genres values(1013,'war');
+---------
+
+
+create table movie_cast (act_id int,mov_id int,role char(30),
+foreign key (act_id) references actor(act_id));
+
+select * from movie_cast;
+
+insert into movie_cast values(101,901,'john scottie ferguson');
+insert into movie_cast values(102,902,'miss giddens');
+
+insert into movie_cast values(103,903,'t.e. lawrence');
+
+insert into movie_cast values(104,904,'michael');
+
+insert into movie_cast values(105,905,'antonio salieri');
+
+insert into movie_cast values(106,906,'rick deckard');
+
+insert into movie_cast values(107,907,'alice harford');
+
+insert into movie_cast values(108,908,'mcmanus');
+
+insert into movie_cast values(109,909,'j.j. gittes');
+
+insert into movie_cast values(110,910,'eddie adams');
+
+insert into movie_cast values(111,911,'alvy singer');
+
+insert into movie_cast values(112,912,'san');
+
+insert into movie_cast values(113,913,'andy dugresne');
+
+insert into movie_cast values(111,914,'lester burnham');
+
+insert into movie_cast values(115,915,'rose dewitt bukater');
+
+insert into movie_cast values(116,916,'sean maguire');
+insert into movie_cast values(117,917,'ed');
+insert into movie_cast values(118,918,'renton');
+insert into movie_cast values(119,919,'alfred borden');
+insert into movie_cast values(120,920,'elizabeth');
+insert into movie_cast values(121,921,'older jamal');
+insert into movie_cast values(122,922,'ripley');
+insert into movie_cast values(123,923,'bobby darin');
+
+drop table movie;
+
+create table movie( movie_id integer primary key,mov_title char(50),mov_year int,mov_time int,mov_lang char(50),
+mov_date_rel date,mov_rel_country char(10));
+alter table movie modify mov_lang char(20);
+select * from movie;
+        
+
+insert into movie values(901,'vertigo',1958,128,'english','24-08-1958','UK');
+insert into movie values(902,'the innocents',1961,100,'english','19-02-1962','SW');
+insert into movie values(903,'lawrence of arabia',1962,216,'english','11-12-1962','UK');
+insert into movie values(904,'the deer hunter',1978,183,'english','08-03-1979','UK');
+insert into movie values(905,'amadeus',1984,160,'english','07-01-1985','UK');
+insert into movie values(906,'blade runner',1982,117,'english','09-09-1982','UK');
+insert into movie values(907,'eyes wide shut',1999,159,'english','','UK');
+insert into movie values(908,'the usual suspects',1995,106,'english','25-08-1995','UK');
+insert into movie values(909,'chinatown',1974,118,'english','08-09-1974','UK');
+insert into movie values(910,'boogie nights',1997,138,'english','16-02-1998','UK');
+insert into movie values(911,'annie hall',1977,93,'english','20-041977','USA');
+insert into movie values(912,'princess mononoke',1997,148,'japanese','19-10-2001','UK');
+insert into movie values(913,'the shawshank redemption',1994,180,'english','18-02-1995','UK');
+insert into movie values(914,'american beauty',1999,125,'english','','UK');
+insert into movie values(915,'titanic',1997,118,'english','23-01-1998','UK');
+insert into movie values(916,'good will hunting',1997,135,'english','03-06-1998','UK');
+insert into movie values(917,'deliverance',1972,117,'english','05-10-1986','UK');
+insert into movie values(918,'trainsporting',1996,94,'english','23-03-1996','UK');
+insert into movie values(919,'the prestiage',2006,126,'english','10-11-2006','UK');
+insert into movie values(920,'donnie darko',2001,107,'english','','UK');
+insert into movie values(921,'slumdog millionare',2008,109,'english','09-01-1996','UK');
+insert into movie values(922,'aliens',1986,112,'english','29-08-1986','UK');
+insert into movie values(923,'beyond the sea',2004,122,'english','26-11-2004','UK');
+insert into movie values(924,'avatar',2009,144,'english','17-12-2009','UK');
+insert into movie values(925,'braveheart',1995,156,'english','08-09-1995','UK');
+insert into movie values(926,'seven samurai',1954,139,'japanese','26-04-1954','JP');
+insert into movie values(927,'spirited away',2001,131,'japanese','12-09-2003','UK');
+insert into movie values(928,'back to the future',1985,136,'english','04-12-1985','UK');
+
+
+
+
+
+
+------------
+drop table movie_direction;
+
+create table movie_direction(dir_id int,mov_id int,
+foreign key (dir_id) references director(dir_id),
+foreign key (mov_id) references movie(movie_id));
+
+
+select * from movie_direction;
+insert into movie_direction values(201,901);
+insert into movie_direction values(202,902);
+insert into movie_direction values(203,903);
+insert into movie_direction values(204,904);
+insert into movie_direction values(205,905);
+insert into movie_direction values(206,906);
+insert into movie_direction values(207,907);
+insert into movie_direction values(208,908);
+insert into movie_direction values(209,909);
+insert into movie_direction values(210,910);
+insert into movie_direction values(211,911);
+insert into movie_direction values(212,912);
+insert into movie_direction values(213,913);
+insert into movie_direction values(214,914);
+insert into movie_direction values(215,915);
+insert into movie_direction values(216,916);
+insert into movie_direction values(217,917);
+insert into movie_direction values(218,918);
+insert into movie_direction values(219,919);
+insert into movie_direction values(220,920);
+insert into movie_direction values(221,921);
+
+--------------------
+drop table movie_genres;
+
+create table movie_genres(mov_id int,gen_id int,
+foreign key (mov_id) references movie(movie_id),
+foreign key (gen_id) references genres(gen_id));
+
+select * from movie_genres;
+
+insert into movie_genres values(922,1001);
+insert into movie_genres values(917,1002);
+
+insert into movie_genres values(903,1002);
+
+insert into movie_genres values(912,1003);
+
+insert into movie_genres values(911,1005);
+
+insert into movie_genres values(908,1006);
+
+insert into movie_genres values(913,1006);
+
+insert into movie_genres values(926,1007);
+
+insert into movie_genres values(928,1007);
+
+insert into movie_genres values(918,1007);
+
+insert into movie_genres values(921,1007);
+
+insert into movie_genres values(902,1008);
+
+insert into movie_genres values(923,1009);
+insert into movie_genres values(907,1010);
+
+
+insert into movie_genres values(927,1010);
+
+
+insert into movie_genres values(901,1010);
+insert into movie_genres values(914,1011);
+insert into movie_genres values(906,1012);
+insert into movie_genres values(904,1013);
+
+
+-----------
+
+create table reviewer(rev_id int primary key,rev_name char(30));
+
+select * from reviewer;
+insert into reviewer values(9001,'righty sock');
+insert into reviewer values(9002,'jack malvern');
+insert into reviewer values(9003,'flagrant baronessa');
+insert into reviewer values(9004,'alec shaw');
+insert into reviewer values(9005,'');
+insert into reviewer values(9006,'victor woeltjen');
+insert into reviewer values(9007,'simon wright');
+insert into reviewer values(9008,'neal wruck');
+insert into reviewer values(9009,'paul monks');
+insert into reviewer values(9010,'mike salvati');
+insert into reviewer values(9011,'');
+insert into reviewer values(9012,'wesley s.walker');
+insert into reviewer values(9013,'sasha goldshtein');
+insert into reviewer values(9014,'josh cates');
+insert into reviewer values(9015,'krug stillo');
+insert into reviewer values(9016,'scott lebrun');
+insert into reviewer values(9017,'hannah steele');
+insert into reviewer values(9018,'vincent cadena');
+insert into reviewer values(9019,'brandt sponseller');
+insert into reviewer values(9020,'richard adams');
+
+--------------------------
+create table rating(mov_id int,rev_id int,rev_stars int,num_o_ratings int,
+foreign key (mov_id) references movie(movie_id),
+foreign key (rev_id) references reviewer(rev_id));
+
+insert into rating values(901,9001,8.4,263575);
+
+insert into rating values(902,9002,7.9,20207);
+
+insert into rating values(903,9003,8.3,202778);
+insert into rating values(906,9005,8.2,484746);
+insert into rating values(924,9006,7.3,null);
+insert into rating values(908,9007,8.6,779489);
+insert into rating values(909,9008,null,227235);
+insert into rating values(910,9009,3,195961);
+insert into rating values(911,9010,8.1,203875);
+insert into rating values(912,9011,8.4,null);
+insert into rating values(914,9013,7,862618);
+insert into rating values(915,9001,7.7,830095);
+insert into rating values(916,9014,4,642132);
+insert into rating values(925,9015,7.7,81328);
+insert into rating values(918,9016,8,580301);
+
+insert into rating values(920,9017,8.1,609451);
+
+insert into rating values(921,9018,8,667758);
+insert into rating values(922,9019,8.4,511613);
+insert into rating values(923,9020,6.7,13091);
+
+select * from rating;
+--------------------------------------
+3.Write a query in SQL to list the Horror movies?
+
+
+SELECT MOV_TITLE FROM MOVIE WHERE MOVIE_ID =(SELECT MOV_ID
+FROM MOVIE_GENRES WHERE GEN_ID = (SELECT GEN_ID
+FROM GENRES WHERE GEN_TITLE = 'Horror'));
+
+----------------------------------
+
+4. Write a query in SQL to find the name of all reviewers who have rated 8 or   more stars?
+
+
+SELECT reviewer.rev_name
+FROM reviewer, rating
+WHERE rating.rev_id = reviewer.rev_id
+AND rating.rev_stars>=8 
+AND reviewer.rev_name IS NOT NULL;
+
+
+-------------------------------------
+
+5.Write a query in SQL to list all the information of the actors who played a role in the movie ‘Deliverance’
+
+SELECT * 
+FROM actor 
+WHERE act_id IN(
+SELECT act_id 
+FROM movie_cast 
+WHERE mov_id IN (
+SELECT movie_id 
+FROM movie 
+WHERE mov_title='deliverance'));
+
+-------------------------------
+6.Write a query in SQL to find the name of the director (first and last names) who directed a movie 
+that casted a role for ‘Eyes Wide Shut’. (using subquery)
+
+
+SELECT DIR_FNAME, DIR_LNAME FROM DIRECTOR 
+WHERE DIR_ID = (SELECT DIR_ID FROM MOVIE_DIRECTION 
+WHERE MOV_ID = (SELECT MOV_ID FROM MOVIE WHERE MOV_TITLE 
+='Eyes Wide Shut'));
+------------------------------------
+
+7.Write a query in SQL to find the movie title, year, date of release, director and actor for those movies which reviewer is ‘Neal Wruck’
+
+SELECT mov_title, mov_year, dir_fname, dir_lname, 
+act_fname, act_lname
+FROM movie a, movie_direction b, director c, 
+rating d, reviewer e, actor f, movie_cast g
+WHERE a.movie_id=b.mov_id
+AND  b.dir_id=c.dir_id AND a.movie_id=d.mov_id 
+AND  d.rev_id=e.rev_id  AND  a.movie_id=g.mov_id 
+AND g.act_id=f.act_id 
+AND e.rev_name  ='neal wruck';
+--------------------------------------
+
+8.Write a query in SQL to find all the years which produced at least one movie and that received a rating of more than 4 stars.
+
+SELECT DISTINCT mov_year 
+FROM movie 
+WHERE movie_id IN (
+SELECT mov_id 
+FROM rating 
+WHERE rev_stars>4) 
+ORDER BY mov_year;
+
+--------------------------------------
+
+9.Write a query in SQL to find the name of all movies who have rated their ratings with a NULL value
+
+Select mov_title from movie 
+where movie_id in (select mov_id from rating where num_o_ratings is null);
+
+----------------------------------------
+10.	Write a query in SQL to find the name of movies who were directed by ‘David’
+
+SELECT mov_title
+FROM movie
+WHERE movie_id IN (
+SELECT mov_id 
+FROM movie_direction 
+WHERE dir_id IN (
+SELECT dir_id 
+FROM director 
+WHERE dir_fname = 'david'));
+
+-------------------------------------------
+11.Write a query in SQL to list the first and last names of all the actors who were cast in the movie ‘Boogie Nights’,
+ and the roles they played in that production
+
+SELECT act_fname,act_lname,role
+  FROM actor 
+JOIN movie_cast ON actor.act_id=movie_cast.act_id
+JOIN movie ON movie_cast.mov_id=movie.movie_id 
+AND movie.mov_title='boogie nights';
+--------------------------------------------
+
+12.Find the name of the actor who have worked in more than one movie.
+
+
+SELECT CONCAT(ACT_FNAME,ACT_LNAME) AS ACTOR_NAME 
+FROM ACTOR 
+WHERE ACT_ID IN (SELECT act_id FROM MOVIE_CAST 
+ group by act_id 
+ HAVING COUNT(ACT_ID)>1);
+
+
+
+
+--------------------------------------------------
+
