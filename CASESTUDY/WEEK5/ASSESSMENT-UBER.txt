@@ -1,0 +1,80 @@
+1.	Use SQL* Loader to load the all the files to an Oracle Database table
+
+OPTIONS ( SKIP=1)
+LOAD DATA
+INFILE 'C:\Users\SaikumarGanji\Downloads\Fact_trip.csv'
+TRUNCATE INTO TABLE FACT_TRIP
+FIELDS TERMINATED BY ","
+(trip_uuid,datestr,product_type_name,city_id,driver_uuid,is_completed,eta,ata,ufp_fare,fare_final)
+
+
+OPTIONS (SKIP=1)
+LOAD DATA
+INFILE 'C:\Users\SaikumarGanji\Downloads\Dim_city.csv'
+TRUNCATE INTO TABLE dim_city
+FIELDS TERMINATED BY ","
+(city_id,city_name,country)
+
+
+
+
+
+
+
+2.	Create the table structure with appropriate data types before loading with SQL Loader
+
+create table fact_trip(TRIP_UUID	VARCHAR2(20),
+DATESTR	DATE,
+PRODUCT_TYPE_NAME	VARCHAR2(20),
+CITY_ID	NUMBER,
+DRIVER_UUID	VARCHAR2(200),
+IS_COMPLETED	VARCHAR2(10),
+ETA	NUMBER,
+ATA	NUMBER,
+UFP_FARE	NUMBER,
+FARE_FINAL	NUMBER);
+       
+create table dim_city(city_id number,city_name varchar(50),
+country varchar(10));
+
+
+
+3.	Answer the following questions
+a.	How many city_ids does uberPOOL operate in?
+b.	Which city_id has the highest error in ETA (where error in ETA = {(eta - ata)/ata}) for the given time period?
+c.	Which is the product type with highest total revenue in SanFrancisco?
+d.	Which are the products in each city where total revenue(fare_final) > $1000?
+e.	Get to 2nd highest country by Uber Revenue (fare_fin``al) for 2nd week of June 2018 across product
+f.	Get WOW growth % for US region for June Month. WOW- Week over week .
+g.	Growth % = ((Current week fare final - previous week fare final) / previous week fare final) * 100
+
+
+
+ANSWERS:
+
+a.select  COUNT(DISTINCT(CITY_ID)) FROM FACT_TRIP WHERE PRODUCT_TYPE_NAME='uberPOOL';
+------
+
+b.select * from(select city_id,(eta-ata)/ata as ETA from fact_trip
+order by ETA desc) where rownum=1;
+
+---------
+c.select product_type_name from fact_trip where fare_final = (select max(fare_final) from 
+(select fare_final from fact_trip where city_id=(select city_id from dim_city where city_name = 'SanFrancisco')));
+
+--------------
+
+d.select city_id from fact_trip where fare_final>1000;
+
+-------------
+e.select * from(select d.country, f.fare_final, rownum as rank from dim_city d join fact_trip f on d.city_id=f.city_id 
+where to_char(datestr, 'W')=2 order by 2) where mod(rank, 2)=0;
+
+-------------------
+f.
+--------------
+g.
+
+
+
+
