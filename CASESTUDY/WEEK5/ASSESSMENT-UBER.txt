@@ -53,12 +53,14 @@ g.	Growth % = ((Current week fare final - previous week fare final) / previous w
 ANSWERS:
 
 a.select  COUNT(DISTINCT(CITY_ID)) FROM FACT_TRIP WHERE PRODUCT_TYPE_NAME='uberPOOL';
+
 ------
 
 b.select * from(select city_id,(eta-ata)/ata as ETA from fact_trip
 order by ETA desc) where rownum=1;
 
 ---------
+
 c.select product_type_name from fact_trip where fare_final = (select max(fare_final) from 
 (select fare_final from fact_trip where city_id=(select city_id from dim_city where city_name = 'SanFrancisco')));
 
@@ -71,9 +73,20 @@ e.select * from(select d.country, f.fare_final, rownum as rank from dim_city d j
 where to_char(datestr, 'W')=2 order by 2) where mod(rank, 2)=0;
 
 -------------------
-f.
+
+f.select(((select sum(fare_final) from fact_trip where to_char(datestr, 'W')=1)- (select sum(fare_final)
+from fact_trip where to_char(datestr, 'W')=2))/ (select sum(fare_final) from fact_trip 
+where to_char(datestr, 'W')=1)) * 100 as "Growth%" from fact_trip group by datestr;
+
 --------------
-g.
+
+g.select (((select sum(fare_final) from fact_trip where to_char(datestr, 'W')='1') - (select sum(fare_final)
+ from fact_trip where to_char(datestr, 'W')='2')) / (select sum(fare_final) from fact_trip 
+where to_char(datestr, 'W')='1')) * 100 as "Growth%" from dual;
+
+
+
+
 
 
 
