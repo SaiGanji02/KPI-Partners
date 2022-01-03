@@ -8,6 +8,16 @@ FIELDS TERMINATED BY ","
 (trip_uuid,datestr,product_type_name,city_id,driver_uuid,is_completed,eta,ata,ufp_fare,fare_final)
 
 
+D:\PLSQL>sqlldr userid=saikdb/root control='D:\PLSQL\new.ctl'
+
+SQL*Loader: Release 11.2.0.2.0 - Production on Mon Jan 3 08:36:30 2022
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Commit point reached - logical record count 64
+
+----
+
 OPTIONS (SKIP=1)
 LOAD DATA
 INFILE 'C:\Users\SaikumarGanji\Downloads\Dim_city.csv'
@@ -17,8 +27,18 @@ FIELDS TERMINATED BY ","
 
 
 
+D:\PLSQL>sqlldr userid=saikdb/root control='D:\PLSQL\new2.ctl'
+
+SQL*Loader: Release 11.2.0.2.0 - Production on Mon Jan 3 08:29:30 2022
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Commit point reached - logical record count 20
 
 
+
+
+-----------------------------------------------------------------------------------------------
 
 
 2.	Create the table structure with appropriate data types before loading with SQL Loader
