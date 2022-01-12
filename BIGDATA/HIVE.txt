@@ -1,0 +1,204 @@
+What is Hive:
+
+-- Hive is a data warehouse infrastructure tool to process structured data in Hadoop. It resides on top of Hadoop to summarize Big Data,
+  and makes querying and analyzing easy.
+-- Initially Hive was developed by Facebook, later the Apache Software Foundation took it up and developed it further as an open source 
+  under the name Apache Hive. It is used by different companies. For example, Amazon uses it in Amazon Elastic MapReduce.
+
+Hive is not 
+
+-A relational database
+-A design for OnLine Transaction Processing (OLTP)
+-A language for real-time queries and row-level updates.
+
+Features of Hive:
+
+-It stores schema in a database and processed data into HDFS.
+-It is designed for OLAP.
+-It provides SQL type language for querying called HiveQL or HQL.
+-It is familiar, fast, scalable, and extensible.
+
+---------------
+
+[cloudera@quickstart ~]$ hive
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=512M; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+OpenJDK 64-Bit Server VM warning: If the number of processors is expected to increase from one, then you should configure the number of parallel GC threads appropriately using -XX:ParallelGCThreads=N
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=512M; support was removed in 8.0
+
+Logging initialized using configuration in jar:file:/usr/lib/hive/lib/hive-common-1.1.0-cdh5.13.0.jar!/hive-log4j.properties
+WARNING: Hive CLI is deprecated and migration to Beeline is recommended.
+hive> create database sai;
+OK
+Time taken: 3.337 seconds
+hive> show databases;
+OK
+default
+sai
+test
+Time taken: 0.744 seconds, Fetched: 3 row(s)
+hive> use sai;
+OK
+Time taken: 0.056 seconds
+hive> create table KPI1(id int,name string,sal float);
+OK
+Time taken: 0.621 seconds
+hive> describe KPI1;
+OK
+id                  	int                 	                    
+name                	string              	                    
+sal                 	float               	                    
+Time taken: 0.343 seconds, Fetched: 3 row(s)
+hive> insert into table sai values(1,'saikumar,'2.5');
+NoViableAltException(296@[233:1: constant : ( Number | dateLiteral | timestampLiteral | StringLiteral | stringLiteralSequence | BigintLiteral | SmallintLiteral | TinyintLiteral | DecimalLiteral | charSetStringLiteral | booleanValue );])
+	at org.antlr.runtime.DFA.noViableAlt(DFA.java:158)
+	at org.antlr.runtime.DFA.predict(DFA.java:116)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.constant(HiveParser_IdentifiersParser.java:5962)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.atomExpression(HiveParser_IdentifiersParser.java:6701)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.precedenceFieldExpression(HiveParser_IdentifiersParser.java:6879)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.precedenceUnaryPrefixExpression(HiveParser_IdentifiersParser.java:7264)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.precedenceUnaryPrefixExpression(HiveParser.java:44984)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_FromClauseParser.valueRowConstructor(HiveParser_FromClauseParser.java:6628)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_FromClauseParser.valuesTableConstructor(HiveParser_FromClauseParser.java:6740)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_FromClauseParser.valuesClause(HiveParser_FromClauseParser.java:6878)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.valuesClause(HiveParser.java:44976)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.regularBody(HiveParser.java:41530)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.queryStatementExpressionBody(HiveParser.java:40710)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.queryStatementExpression(HiveParser.java:40586)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.execStatement(HiveParser.java:1529)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.statement(HiveParser.java:1065)
+	at org.apache.hadoop.hive.ql.parse.ParseDriver.parse(ParseDriver.java:201)
+	at org.apache.hadoop.hive.ql.parse.ParseDriver.parse(ParseDriver.java:166)
+	at org.apache.hadoop.hive.ql.Driver.compile(Driver.java:522)
+	at org.apache.hadoop.hive.ql.Driver.compileInternal(Driver.java:1356)
+	at org.apache.hadoop.hive.ql.Driver.runInternal(Driver.java:1473)
+	at org.apache.hadoop.hive.ql.Driver.run(Driver.java:1285)
+	at org.apache.hadoop.hive.ql.Driver.run(Driver.java:1275)
+	at org.apache.hadoop.hive.cli.CliDriver.processLocalCmd(CliDriver.java:226)
+	at org.apache.hadoop.hive.cli.CliDriver.processCmd(CliDriver.java:175)
+	at org.apache.hadoop.hive.cli.CliDriver.processLine(CliDriver.java:389)
+	at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:781)
+	at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:699)
+	at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:634)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+FAILED: ParseException line 1:42 cannot recognize input near ''saikumar,'' '2.5' ')' in constant
+hive> insert into table KPI1 values(1,'saikumar,'2.5');
+NoViableAltException(296@[233:1: constant : ( Number | dateLiteral | timestampLiteral | StringLiteral | stringLiteralSequence | BigintLiteral | SmallintLiteral | TinyintLiteral | DecimalLiteral | charSetStringLiteral | booleanValue );])
+	at org.antlr.runtime.DFA.noViableAlt(DFA.java:158)
+	at org.antlr.runtime.DFA.predict(DFA.java:116)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.constant(HiveParser_IdentifiersParser.java:5962)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.atomExpression(HiveParser_IdentifiersParser.java:6701)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.precedenceFieldExpression(HiveParser_IdentifiersParser.java:6879)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.precedenceUnaryPrefixExpression(HiveParser_IdentifiersParser.java:7264)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.precedenceUnaryPrefixExpression(HiveParser.java:44984)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_FromClauseParser.valueRowConstructor(HiveParser_FromClauseParser.java:6628)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_FromClauseParser.valuesTableConstructor(HiveParser_FromClauseParser.java:6740)
+	at org.apache.hadoop.hive.ql.parse.HiveParser_FromClauseParser.valuesClause(HiveParser_FromClauseParser.java:6878)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.valuesClause(HiveParser.java:44976)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.regularBody(HiveParser.java:41530)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.queryStatementExpressionBody(HiveParser.java:40710)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.queryStatementExpression(HiveParser.java:40586)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.execStatement(HiveParser.java:1529)
+	at org.apache.hadoop.hive.ql.parse.HiveParser.statement(HiveParser.java:1065)
+	at org.apache.hadoop.hive.ql.parse.ParseDriver.parse(ParseDriver.java:201)
+	at org.apache.hadoop.hive.ql.parse.ParseDriver.parse(ParseDriver.java:166)
+	at org.apache.hadoop.hive.ql.Driver.compile(Driver.java:522)
+	at org.apache.hadoop.hive.ql.Driver.compileInternal(Driver.java:1356)
+	at org.apache.hadoop.hive.ql.Driver.runInternal(Driver.java:1473)
+	at org.apache.hadoop.hive.ql.Driver.run(Driver.java:1285)
+	at org.apache.hadoop.hive.ql.Driver.run(Driver.java:1275)
+	at org.apache.hadoop.hive.cli.CliDriver.processLocalCmd(CliDriver.java:226)
+	at org.apache.hadoop.hive.cli.CliDriver.processCmd(CliDriver.java:175)
+	at org.apache.hadoop.hive.cli.CliDriver.processLine(CliDriver.java:389)
+	at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:781)
+	at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:699)
+	at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:634)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+FAILED: ParseException line 1:43 cannot recognize input near ''saikumar,'' '2.5' ')' in constant
+hive> insert into  KPI1 values(1,'saikumar',5000);
+Query ID = cloudera_20220110214040_b5845bcb-3891-4dac-b281-0b433866c55f
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1641877638224_0001, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1641877638224_0001/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1641877638224_0001
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2022-01-10 21:42:05,826 Stage-1 map = 0%,  reduce = 0%
+2022-01-10 21:43:07,107 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.51 sec
+MapReduce Total cumulative CPU time: 4 seconds 510 msec
+Ended Job = job_1641877638224_0001
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/hive/warehouse/sai.db/kpi1/.hive-staging_hive_2022-01-10_21-40-39_435_6769527478755986278-1/-ext-10000
+Loading data to table sai.kpi1
+Table sai.kpi1 stats: [numFiles=1, numRows=1, totalSize=18, rawDataSize=17]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.51 sec   HDFS Read: 4157 HDFS Write: 82 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 510 msec
+OK
+Time taken: 152.471 seconds
+hive> select * from KPI1;
+OK
+1	saikumar	5000.0
+Time taken: 0.313 seconds, Fetched: 1 row(s)
+hive> insert into  KPI1 values(2,'bunny',6000),(3,'jp',6000),(4,'pavan',7000),(5,'ganesh',80000),(6,'chaitanya',8989898);
+Query ID = cloudera_20220111211010_e31712bc-19fe-4409-b47b-ad070c312ec8
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1641877638224_0003, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1641877638224_0003/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1641877638224_0003
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2022-01-11 21:13:01,835 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.56 sec
+MapReduce Total cumulative CPU time: 4 seconds 560 msec
+Ended Job = job_1641877638224_0003
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/hive/warehouse/sai.db/kpi1/.hive-staging_hive_2022-01-11_21-10-16_161_7795286292433257156-1/-ext-10000
+Loading data to table sai.kpi1
+Table sai.kpi1 stats: [numFiles=2, numRows=6, totalSize=99, rawDataSize=93]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.56 sec   HDFS Read: 4311 HDFS Write: 145 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 560 msec
+OK
+Time taken: 167.188 seconds
+hive> 
+    > select * from KPI1;
+OK
+1	saikumar	5000.0
+2	bunny	6000.0
+3	jp	6000.0
+4	pavan	7000.0
+5	ganesh	80000.0
+6	chaitanya	8989898.0
+Time taken: 0.231 seconds, Fetched: 6 row(s)
+
+hive> create table friends(name string,mail string);
+OK
+Time taken: 0.361 seconds
+hive> LOAD DATA LOCAL INPATH '/home/cloudera/sample_kpi.txt' INTO TABLE friends;
+Loading data to table sai.friends
+Table sai.friends stats: [numFiles=1, totalSize=116]
+OK
+Time taken: 0.774 seconds
+hive> select * from friends;
+OK
+saikumar,saiganji@gmail.com	NULL
+srinivas,srinu@gmail.com	NULL
+anif,anif@gmail.com	NULL
+umakanth,uma@gmail.com	NULL
+anil,anil@gmail.com	NULL
+Time taken: 0.265 seconds, Fetched: 5 row(s)
+hive> [cloudera@quickstart ~]$ 
