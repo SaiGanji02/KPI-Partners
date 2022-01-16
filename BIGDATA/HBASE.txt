@@ -1,0 +1,160 @@
+What is HBase?
+
+--HBase is a distributed column-oriented database built on top of the Hadoop file system.
+  It is an open-source project and is horizontally scalable.
+
+--HBase is a data model that is similar to Google’s big table designed to provide quick random access to
+  huge amounts of structured data. It leverages the fault tolerance provided by the Hadoop File System (HDFS).
+
+--It is a part of the Hadoop ecosystem that provides random real-time read/write access to data in the Hadoop File System.
+
+--One can store the data in HDFS either directly or through HBase. Data consumer reads/accesses the data in HDFS randomly using HBase.
+  HBase sits on top of the Hadoop File System and provides read and write access.
+
+------------------------------
+
+
+[cloudera@quickstart ~]$ hbase shell
+OpenJDK 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+OpenJDK 64-Bit Server VM warning: If the number of processors is expected to increase from one, then you should configure the number of parallel
+GC threads appropriately using -XX:ParallelGCThreads=N
+22/01/16 07:09:46 INFO Configuration.deprecation: hadoop.native.lib is deprecated. Instead, use io.native.lib.available
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.2.0-cdh5.13.0, rUnknown, Wed Oct  4 11:16:18 PDT 2017
+
+hbase(main):001:0> list
+TABLE                                                                           
+emp                                                                             
+friends                                                                         
+student                                                                         
+students                                                                        
+4 row(s) in 2.2650 seconds
+
+=> ["emp", "friends", "student", "students"]
+hbase(main):002:0> scan 'emp'
+ROW                   COLUMN+CELL                                               
+0 row(s) in 0.7940 seconds
+
+hbase(main):003:0> scan 'friends'
+ROW                   COLUMN+CELL                                               
+0 row(s) in 0.0780 seconds
+
+hbase(main):004:0> scan 'student'
+ROW                   COLUMN+CELL                                               
+ 1                    column=collegedata: college, timestamp=1641533013830, valu
+                      e=nmrec                                                   
+ 1                    column=personaldata: name, timestamp=1641533108243, value=
+                      saikumar                                                  
+ 2                    column=collegedata: college, timestamp=1641533139416, valu
+                      e=pragathi                                                
+ 2                    column=personaldata: name, timestamp=1641533163005, value=
+                      ganji                                                     
+ 3                    column=collegedata: college, timestamp=1641533419810, valu
+                      e=news                                                    
+ 3                    column=personaldata: name, timestamp=1641533438560, value=
+                      nalgonda                                                  
+3 row(s) in 0.6290 seconds
+
+
+hbase(main):006:0> create 'empdata', 'personel_data'
+0 row(s) in 5.2260 seconds
+
+=> Hbase::Table - empdata
+hbase(main):007:0> scan 'empdata'
+ROW                   COLUMN+CELL                                               
+0 row(s) in 0.1360 seconds
+
+hbase(main):008:0> scan 'empdata'
+ROW                   COLUMN+CELL                                               
+0 row(s) in 0.0930 seconds
+
+----------
+
+In hdfs create .csv file 
+==>> vi data_kpi.csv
+
+[cloudera@quickstart ~]$ cat data_kpi.csv
+saikumar,23,m
+vamshi,24,m
+samantha,33,f
+chaitanya,34,m
+
+
+3. Now import csv file to hbase table: 
+
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.separator="," -Dimporttsv.columns="HBASE_ROW_KEY,personel_data:name,
+personel_data:age,personel_data:gender" empdata /home/cloudera/data_kpi.csv
+
+
+
+
+
+
+4. If we want to insert rows individually then write:
+
+put 'emp', '1', 'personel_data: name, age, gender, saikumar, 23, f'
+
+
+
+
+hbase(main):003:0> put 'empdata','1',"personel_data:name,age,gender','saikumar,23,m'
+0 row(s) in 0.6620 seconds
+
+hbase(main):003:0> put 'empdata','1',"personel_data:name,age,gender','vamshi,24,m'
+0 row(s) in 0.6620 seconds
+
+hbase(main):003:0> put 'empdata','1',"personel_data:name,age,gender','samantha,33,f'
+0 row(s) in 0.6620 seconds
+
+hbase(main):003:0> put 'empdata','1',"personel_data:name,age,gender','chaitanya,34,m'
+0 row(s) in 0.6620 seconds
+
+
+hbase(main):006:0> scan 'empdata'
+ROW                                                    COLUMN+CELL                                                                                                                                                  
+ 1                                                     column=personal_data:name,age,gender, timestamp=1641982289621, value=saikumar,23,m                                                                               
+ 2                                                     column=personal_data:name,age,gender, timestamp=1641982375301, value=Vamshi,24,m                                                                              
+ 3                                                     column=personal_data:name,age,gender, timestamp=1641982421274, value=samantha,33,f
+ 4                                                     column=personal_data:name,age,gender, timestamp=1641982421274, value=chaitanya,34,m                                                                                 
+4 row(s) in 0.1540 seconds
+
+
+
+
+Drop the named table. Table must first be disabled:
+  hbase> drop 't1'
+  hbase> drop 'ns1:t1'
+
+hbase(main):023:0> disable 'empdata'
+0 row(s) in 2.2640 seconds
+
+hbase(main):024:0> drop 'empdata'
+0 row(s) in 1.2630 seconds
+
+hbase(main):025:0> scan 'empdata'
+ROW                                                    COLUMN+CELL                                                                                                                                                  
+
+ERROR: Unknown table empdata!
+
+
+6. Describe table
+
+describe 'empdata'
+
+7. How to make a table READONLY.
+hbase(main):024:0> alter 'empdata',{METHOD=>'table_att', READONLY=>true}
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 2.2310 seconds
+
+8.Truncate table
+
+hbase(main):025:0> truncate 'empdata'
+Truncating 'emp' table (it may take a while):
+ - Disabling table...
+ - Truncating table...
+0 row(s) in 2.8440 seconds
+
+--------------------------------------------------------------
