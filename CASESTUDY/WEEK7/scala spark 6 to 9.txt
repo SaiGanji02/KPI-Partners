@@ -1,0 +1,186 @@
+
+Consumer Complaints in Banking Sector.
+
+Abstract:
+
+This Use Case focuses on exploring and analyzing Consumer Finance Complaints data, to find how many similar complaints are there in relation to the
+ same bank or service or product. These datasets fall under the complaints of Credit reporting, Mortgage, Debt Collection, Consumer Loan and Banking
+ Accounting. By using data mining techniques, cluster analysis, AWS Services as well as predictive modelling is applied to obtain valuable 
+information about complaints in certain regions of the Country. The banks that are receiving customer complaints filed against them will analyse 
+the complaint data to provide results on where the most complaints are being filed, what products/ services are producing the most complaints and 
+other useful data. Our model will assist banks in identifying the location and types of errors for resolution, leading to increased customer 
+satisfaction to drive revenue and profitability.
+
+
+Problem Statements:
+1.	Clean and Transform data for proper processing and getting complete insights without any garbage values
+2.	Find the number of complaints for which the Company response is currently "in progress".
+3.	Which company has the maximum consumer complaints.
+4.	Which Companies is able to solve issues of customers (on the terms of Company response and timely response)
+5.	Which companies are having least response time for a complaint raised?
+6.	Find the issue that occurred mostly.
+7.	Which are the Top 5 states having the highest volume of complaints coming.
+8.	Which are the Top 5 companies people complaining the most.
+9.	Which product has the most number of complaints.
+
+
+
+
+
+-------------------------------------------------------------------------
+ 6
+---------
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.desc
+//import scala.util.control.Breaks.break
+//import spark.implicits._
+//import org.apache.spark.sql.functions._
+//import scala.collection.immutable.Nil.groupBy
+object IssueOccured extends App{
+  val spark: SparkSession = SparkSession.builder().master("local[*]").appName("SparkByExamples.com")
+    .getOrCreate()
+  val df=spark.read.option("header",true).csv(path = "src/main/data/complaints.csv")
+  df.show()
+  df.createOrReplaceTempView(viewName="facts")
+  val table = spark.sql(sqlText = "select issue,count(issue) from facts group by issue order by 2 desc limit 1")
+  println(table.show())
+}
+
+OUTPUT:
+-------
+
++--------------------+------------+
+|               issue|count(issue)|
++--------------------+------------+
+|Loan modification...|       70487|
++--------------------+------------+
+
+--------------------------------------------------------------------------------------------------------
+ 7
+-------------------
+
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.desc
+//import scala.util.control.Breaks.break
+//import spark.implicits._
+//import org.apache.spark.sql.functions._
+//import scala.collection.immutable.Nil.groupBy
+object IssueOccured extends App{
+  val spark: SparkSession = SparkSession.builder().master("local[*]").appName("SparkByExamples.com")
+    .getOrCreate()
+  val df=spark.read.option("header",true).csv(path = "src/main/data/complaints.csv")
+  df.show()
+  df.createOrReplaceTempView(viewName="facts")
+  val table = spark.sql(sqlText = "select state,count(issue) from facts group by state order by 2 desc limit 5")
+  println(table.show())
+}
+
+OUTPUT:
+------
+
++-----+------------+
+|state|count(issue)|
++-----+------------+
+|   CA|       47076|
+|   FL|       30164|
+|   TX|       21711|
+|   NY|       21519|
+|   GA|       13514|
++-----+------------+
+
+
+
+------------------------------------------------------------------------------------------------------------
+ 8
+--------------
+
+
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.desc
+//import scala.util.control.Breaks.break
+//import spark.implicits._
+//import org.apache.spark.sql.functions._
+//import scala.collection.immutable.Nil.groupBy
+object IssueOccured extends App{
+  val spark: SparkSession = SparkSession.builder().master("local[*]").appName("SparkByExamples.com")
+    .getOrCreate()
+  val df=spark.read.option("header",true).csv(path = "src/main/data/complaints.csv")
+  df.show()
+  df.createOrReplaceTempView(viewName="facts")
+  val table = spark.sql(sqlText = "select company,count(issue) from facts group by company,issue order by 2 desc limit 5")
+  println(table.show())
+}
+
+
+OUTPUT:
+------
+
++---------------+------------+
+|        company|count(issue)|
++---------------+------------+
+|Bank of America|       20038|
+|    Wells Fargo|       10874|
+|       Experian|       10377|
+|        Equifax|        9358|
+|     TransUnion|        8047|
++---------------+------------+
+
+------------------------------------------------------------------------------------------------------------------
+ 9
+---------------
+
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.desc
+//import scala.util.control.Breaks.break
+//import spark.implicits._
+//import org.apache.spark.sql.functions._
+//import scala.collection.immutable.Nil.groupBy
+object IssueOccured extends App{
+  val spark: SparkSession = SparkSession.builder().master("local[*]").appName("SparkByExamples.com")
+    .getOrCreate()
+  val df=spark.read.option("header",true).csv(path = "src/main/data/complaints.csv")
+  df.show()
+  df.createOrReplaceTempView(viewName="facts")
+  val table = spark.sql(sqlText = "select product ,count(issue) from facts group by product,issue order by 2 desc limit 5")
+  println(table.show())
+}
+
+OUTPUT:
+-------
++--------------------+------------+
+|             product|count(issue)|
++--------------------+------------+
+|            Mortgage|       70487|
+|            Mortgage|       36767|
+|    Credit reporting|       29069|
+|     Debt collection|       17972|
+|Bank account or s...|       16205|
++--------------------+------------+
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
